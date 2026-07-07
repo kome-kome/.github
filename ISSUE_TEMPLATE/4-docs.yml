@@ -1,0 +1,39 @@
+name: "📝 Documentation"
+description: "README、ドキュメント、コメントなどの改善"
+title: "[Docs]: "
+labels: ["documentation", "needs triage"]
+body:
+  - type: textarea
+    id: target
+    attributes:
+      label: "対象"
+      description: "どのドキュメントを修正・追加したいですか？"
+      placeholder: "例: README.md の初期設定手順"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: "現在の問題"
+      description: "何が分かりにくい、または不足していますか？"
+      placeholder: "例: Windows PowerShell 用の手順がない。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "提案内容"
+      description: "どのように修正するとよいですか？"
+      placeholder: "例: PowerShell 用の New-Item コマンド例を追加する。"
+    validations:
+      required  - type: textarea
+    id: acceptance
+    attributes:
+      label: "完了条件"
+      placeholder: |
+        - [ ] 対象ドキュメントが更新されている
+        - [ ] 手順が再現可能である
+    validations:
+      required: true

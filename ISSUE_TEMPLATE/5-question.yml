@@ -1,0 +1,35 @@
+name: "❓ Question"
+description: "使い方や仕様に関する質問"
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        質問ありがとうございます。
+        バグ報告や機能要望の場合は、別のテンプレートを選んでください。
+
+  - type: textarea
+    id: question
+    attributes:
+      label: "質問内容"
+      description: "知りたいことを具体的に書いてください。"
+      placeholder: "例: .github リポジトリの Issue テンプレートは他のリポジトリにも適用されますか？"
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "背景"
+      description: "なぜその質問が必要になったか、状況を書いてください。"
+    validations:
+      required: false
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: "試したこと"
+      description: "すでに確認したこと、試したことがあれば書いてください。"
+    validations:
+      required: false
