@@ -1,0 +1,70 @@
+name: 機能要望
+description: 新機能や既存機能の改善を提案します
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        機能要望ありがとうございます。
+        「何を作るか」だけでなく、「なぜ必要か」が分かるように記入してください。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 解決したい課題
+      description: 現在どのような困りごとがありますか？
+      placeholder: 例：設定項目が多く、初回セットアップ時に迷いやすい
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案内容
+      description: どのような機能・改善を希望しますか？
+      placeholder: 例：初回起動時にウィザード形式で設定できるようにする
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 代替案
+      description: 他に考えた方法や、現状の回避策があれば書いてください。
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 完了条件
+      description: どうなればこの Issue を完了と判断できますか？
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: 影響範囲
+      description: この要望の影響範囲を選んでください。
+      options:
+        - 小さい：一部の利用者・一部の画面のみ
+        - 中程度：複数の利用者・複数の画面に影響
+        - 大きい：設計や主要機能に影響
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 確認事項
+      options:
+        - label: 同じ内容の Issue が既に存在しないことを確認しました。
+          required: true
+        - label: 解決したい課題を記載しました。
+          required: true
