@@ -1,10 +1,6 @@
 blank_issues_enabled: false
 
 contact_links:
-  - name: "質問・相談"
-    url: "https://github.com/kome-kome"
-    about: "バグ報告や機能要望以外の相談はこちらからお願いします。"
-
   - name: "セキュリティに関する報告"
     url: "https://github.com/kome-kome/.github/security/policy"
     about: "脆弱性やセキュリティ問題は公開 Issue ではなく、Security Policy を確認してください。"

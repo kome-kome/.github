@@ -1,7 +1,7 @@
-name: "🛠 Task"
+name: "🛠 タスク"
 description: "実装・修正・リファクタリングなどの作業タスク"
 title: "[Task]: "
-labels: ["task", "needs triage"]
+labels: ["task", "triage"]
 body:
   - type: markdown
     attributes:
@@ -62,7 +62,8 @@ body:
       label: "依存関係・ブロッカー"
       description: "先に対応が必要な Issue や外部要因があれば書いてください。"
       placeholder: "例: #12 が完了してから対応する。"
-    validations:equired: false
+    validations:
+      required: false
 
   - type: dropdown
     id: size

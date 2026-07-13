@@ -1,7 +1,7 @@
-name: "📝 Documentation"
+name: "📝 ドキュメント"
 description: "README、ドキュメント、コメントなどの改善"
 title: "[Docs]: "
-labels: ["documentation", "needs triage"]
+labels: ["documentation", "triage"]
 body:
   - type: textarea
     id: target
@@ -28,10 +28,13 @@ body:
       description: "どのように修正するとよいですか？"
       placeholder: "例: PowerShell 用の New-Item コマンド例を追加する。"
     validations:
-      required  - type: textarea
+      required: true
+
+  - type: textarea
     id: acceptance
     attributes:
       label: "完了条件"
+      description: "この Issue を閉じられる条件を書いてください。"
       placeholder: |
         - [ ] 対象ドキュメントが更新されている
         - [ ] 手順が再現可能である
