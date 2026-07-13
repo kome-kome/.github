@@ -1,0 +1,89 @@
+name: Sync labels
+
+# .github/labels.json に定義したラベルを、アカウント配下の全リポジトリに作成・更新する。
+#
+# 全リポジトリへ同期するには、リポジトリの Settings > Secrets and variables >
+# Actions に LABEL_SYNC_TOKEN(Personal Access Token)を登録すること。
+#   - Fine-grained PAT: 対象を All repositories、Repository permissions の
+#     Issues を Read and write に設定
+#   - Classic PAT: repo スコープ
+# LABEL_SYNC_TOKEN が未設定の場合は、この .github リポジトリ自身にのみ作成する。
+
+on:
+  workflow_dispatch:
+    inputs:
+      repos:
+        description: "対象リポジトリ名(カンマ区切り)。空欄なら全リポジトリ"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths: [".github/labels.json"]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/github-script@v7
+        env:
+          TARGET_REPOS: ${{ inputs.repos }}
+          HAS_PAT: ${{ secrets.LABEL_SYNC_TOKEN != '' }}
+        with:
+          github-token: ${{ secrets.LABEL_SYNC_TOKEN || github.token }}
+          script: |
+            const fs = require('fs');
+            const labels = JSON.parse(fs.readFileSync('.github/labels.json', 'utf8'));
+            const owner = context.repo.owner;
+
+            let repos;
+            const targetInput = (process.env.TARGET_REPOS || '').trim();
+            if (targetInput) {
+              repos = targetInput.split(',').map((s) => s.trim()).filter(Boolean);
+            } else if (process.env.HAS_PAT === 'true') {
+              const all = await github.paginate(github.rest.repos.listForAuthenticatedUser, {
+                affiliation: 'owner',
+                per_page: 100,
+              });
+              repos = all.filter((r) => !r.archived).map((r) => r.name);
+            } else {
+              core.warning(
+                'LABEL_SYNC_TOKEN が未設定のため、このリポジトリにのみラベルを作成します。' +
+                  '全リポジトリへ同期するには PAT を LABEL_SYNC_TOKEN として登録してください。'
+              );
+              repos = [context.repo.repo];
+            }
+
+            core.info(`対象リポジトリ: ${repos.join(', ')}`);
+
+            let failed = false;
+            for (const repo of repos) {
+              for (const label of labels) {
+                try {
+                  await github.rest.issues.createLabel({ owner, repo, ...label });
+                  core.info(`${owner}/${repo}: created "${label.name}"`);
+                } catch (e) {
+                  if (e.status === 422) {
+                    await github.rest.issues.updateLabel({
+                      owner,
+                      repo,
+                      name: label.name,
+                      color: label.color,
+                      description: label.description,
+                    });
+                    core.info(`${owner}/${repo}: updated "${label.name}"`);
+                  } else {
+                    core.error(`${owner}/${repo}: "${label.name}" の作成に失敗: ${e.message}`);
+                    failed = true;
+                  }
+                }
+              }
+            }
+            if (failed) {
+              core.setFailed('一部のラベル作成に失敗しました。ログを確認してください。');
+            }

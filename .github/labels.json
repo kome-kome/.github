@@ -1,0 +1,32 @@
+[
+  {
+    "name": "bug",
+    "color": "d73a4a",
+    "description": "不具合の報告"
+  },
+  {
+    "name": "enhancement",
+    "color": "a2eeef",
+    "description": "新機能・改善の要望"
+  },
+  {
+    "name": "task",
+    "color": "1d76db",
+    "description": "実装・修正などの作業タスク"
+  },
+  {
+    "name": "documentation",
+    "color": "0075ca",
+    "description": "ドキュメントの改善"
+  },
+  {
+    "name": "question",
+    "color": "d876e3",
+    "description": "質問・相談"
+  },
+  {
+    "name": "triage",
+    "color": "fbca04",
+    "description": "トリアージ(内容確認)待ち"
+  }
+]
